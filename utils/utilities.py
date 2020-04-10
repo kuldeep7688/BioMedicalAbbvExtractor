@@ -10,9 +10,10 @@ class TextPreprocessor(AbbvExtractor):
 
 	def __init__(
 		self, remove_html_tags=True, print_lf_suggestions=False,
-		add_indicators_to_replaced_lf=False
+		add_indicators_to_replaced_lf=False, illegal_shortforms=[]
 	):
 		super().__init__(print_lf_suggestions)
+		super().__init__(illegal_shortforms)
 		self.remove_html_tags_flag = remove_html_tags
 		self.html_pattern = re.compile(r'<[\/\W\:]+>')
 		self.add_indicators_to_replaced_lf = add_indicators_to_replaced_lf

@@ -1,16 +1,14 @@
 import re
 
-from config import ILLEGAL_SHORTFORMS
-
-
 class AbbvExtractor:
 	"""
 	It identifies shortforms from text (standard format of publications).
 	For the identified short form it also extracts the long form.
 	"""
 
-	def __init__(self, print_lf_suggestions=False):
+	def __init__(self, print_lf_suggestions=False, illegal_shortforms=[]):
 		self.print_lf_suggestions = print_lf_suggestions
+		self.illegal_shortforms = illegal_shortforms
 
 	def identify_abbreviation(self, text):
 		"""
@@ -29,7 +27,7 @@ class AbbvExtractor:
 		all_matches = re.findall(shortform_pattern, text)
 		all_matches = list(set(all_matches))
 		all_matches = [
-			mat for mat in all_matches if mat not in ILLEGAL_SHORTFORMS
+			mat for mat in all_matches if mat not in self.illegal_shortforms
 		]
 		all_match_indices = []
 

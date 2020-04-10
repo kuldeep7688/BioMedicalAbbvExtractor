@@ -12,8 +12,10 @@ class TextPreprocessor(AbbvExtractor):
 		self, remove_html_tags=True, print_lf_suggestions=False,
 		add_indicators_to_replaced_lf=False, illegal_shortforms=[]
 	):
-		super().__init__(print_lf_suggestions)
-		super().__init__(illegal_shortforms)
+		# super().__init__(print_lf_suggestions)
+		# super().__init__(illegal_shortforms)
+		self.print_lf_suggestions = print_lf_suggestions
+		self.illegal_shortforms = illegal_shortforms
 		self.remove_html_tags_flag = remove_html_tags
 		self.html_pattern = re.compile(r'<[\/\W\:]+>')
 		self.add_indicators_to_replaced_lf = add_indicators_to_replaced_lf
@@ -38,12 +40,12 @@ class TextPreprocessor(AbbvExtractor):
 				# remove the sf (sf) from text
 				text = text[:item["abbv_start_end_indices"][0]] + \
 						' ' * len(item["abbv"]) + \
-						text[item["abbv_start_end_indices"][1:]]
+						text[item["abbv_start_end_indices"][1]:]
 
 			else:
 				text = text[:item["abbv_start_end_indices"][0]] + \
-						' ' + len(item["abbv"][1: -1]) +  ' ' +\
-						text[item["abbv_start_end_indices"][1:]]
+						' ' + item["abbv"][1: -1] +  ' ' +\
+						text[item["abbv_start_end_indices"][1]:]
 
 		text = re.sub(r'\s+', ' ', text)
 		if split_sentences is True:
@@ -106,7 +108,7 @@ class TextPreprocessor(AbbvExtractor):
 						print(e)
 
 					if self.add_indicators_to_replaced_lf:
-						text = sentence.replace(
+						text = text.replace(
 							item["long_form"], " LFS:" +
 							item["long_form"] + ":LFE "
 						)

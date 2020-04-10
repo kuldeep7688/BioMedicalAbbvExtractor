@@ -27,21 +27,21 @@ class AbbvExtractor:
 		all_matches = re.findall(shortform_pattern, text)
 		all_matches = list(set(all_matches))
 		all_matches = [
-			mat for mat in all_matches if mat not in self.illegal_shortforms
+		    mat for mat in all_matches if mat not in self.illegal_shortforms
 		]
 		all_match_indices = []
-
-		for match in all_matches:
+		for match in all_matches.copy():
+			reduced_match = re.sub('[\s0-9\-]+', '', match)
 			if len(match.strip().split()) > 2:
 				all_matches.remove(match)
-			elif 2 > len(match) or len(match) > 10:
+			elif 2 > len(reduced_match) or len(reduced_match) > 15:
 				all_matches.remove(match)
 			elif len(re.findall("[A-Z]+", match)) < 1:
 				all_matches.remove(match)
 			else:
 				start_index = text.find(match)
 				all_match_indices.append(
-					(start_index, start_index + len(match))
+			    	(start_index, start_index + len(match))
 				)
 		return all_matches, all_match_indices
 
@@ -141,7 +141,7 @@ class AbbvExtractor:
 					pass
 
 			if self.print_lf_suggestions:
-				priint(te_list)
+				print(te_list)
 
 			form_list = [
 				(self.find_long_form(abbv, te), te)

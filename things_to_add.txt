@@ -1,0 +1,13 @@
+Some typical rules include the following:
+
+AA cannot contain more than 20 characters.
+
+Expansions must be longer than their corresponding AA.
+
+Expansions cannot contain parenthesized text.
+
+Single-word AA cannot contain more than 12 characters.
+
+AA cannot begin with such, also or including.
+
+ADD this paper : https://psb.stanford.edu/psb-online/proceedings/psb03/schwartz.pdf
